@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/task_wettermanufaktur/static/css/main.91570377.css",
+    "main.js": "/task_wettermanufaktur/static/js/main.7b5941d0.js",
+    "index.html": "/task_wettermanufaktur/index.html",
+    "main.91570377.css.map": "/task_wettermanufaktur/static/css/main.91570377.css.map",
+    "main.7b5941d0.js.map": "/task_wettermanufaktur/static/js/main.7b5941d0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.91570377.css",
+    "static/js/main.7b5941d0.js"
+  ]
+}
