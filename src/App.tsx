@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import HourlyList from "./components/HourlyList";
 import "./main.css";
 
-//!fix token fetching
+//! fix token fetching
+//! hardcoded token obtained in cURL or Postman
 const acessToken: string =
   "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5USXlNREkxUkRRNVJUUkNOakJFUXpJek5EWXlOVGcxUmtORk9FVkdOVVJGUlVSRk5rWTRNZyJ9.eyJodHRwczovL3Nob3BtYW4ubWV0b3BzLm5ldC9yb2xlcyI6eyJiZmYiOlsicmVhZCJdfSwiaHR0cHM6Ly9zaG9wbWFuLm1ldG9wcy5uZXQvY3VzdG9tZXJJZCI6IjEiLCJodHRwczovL3Nob3BtYW4ubWV0b3BzLm5ldC9wcm9kdWN0SWQiOiJiZXdlcmJlckB3ZXR0ZXJtYW51ZmFrdHVyLmRlIiwiaXNzIjoiaHR0cHM6Ly93ZWF0aGVyc29sdXRpb25zLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MzczNjE1NzU4ZGY5ZjRjY2Y5NWI5YjYiLCJhdWQiOlsiaHR0cHM6Ly9zaG9wbWFuLm1ldG9wcy5uZXQiLCJodHRwczovL3dlYXRoZXJzb2x1dGlvbnMuZXUuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY3MDAwNzc3OCwiZXhwIjoxNjcwMDk0MTc4LCJhenAiOiI4QUNZVHdFWlhLcFpFRmFiTjg4eDNuNUg2NjFiMDh3QyIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgYWRkcmVzcyBwaG9uZSByZWFkOnBhcmFtZXRlciByZWFkOnJvbGVzIiwiZ3R5IjoicGFzc3dvcmQifQ.Kr7XsYM6GzhdOWALVhnoEZAR1WBVO-q_kEcoMy6i6WD2xIrFCIL4ebfqajO1mFwX8SM8B4hkmGWzXyJnoAf-LOpwu-BYvKjcqI631TLiDuVm0577W1e6HHQILJB720fB8GlitUS5zgctRW3pUC7Xo_B1_gbYggi-FXehbVLILYc1EmsJl5cWrvxuWfM8kF5a-I_xBtBTM7eLUPTtJdtIjTzS_SEenehw89dS3x-UoG9mOeIu2_kupVRhGcIC-fBZFVNtuoy2_xEg4BL4o-mfn4kCuOKYh7185OZ3muKYVpu6WQ-_nPpJ64mMNIy4kTaB7HfL9lq0Q1SvFcRdzANB-A";
 
@@ -51,15 +52,12 @@ function App() {
     const end: Date = new Date();
     end.setDate(now.getDate() + 4);
 
-    //!fix timezone or its correct?
     const formattedStartDate: string = new Date(
       now.toString().split("GMT")[0] + " UTC"
     ).toISOString();
     const formattedEndDate: string = new Date(
       end.toString().split("GMT")[0] + " UTC"
     ).toISOString();
-
-    //console.log(formattedStartDate, formattedEndDate);
 
     const res = await axios.get(
       `https://shopman-bff-backend.metops.net/mos/${station}?dtgStart=${formattedStartDate}&dtgEnd=${formattedEndDate}`,
@@ -79,17 +77,20 @@ function App() {
         <a href="https://wettermanufaktur.de/en/home.html">Wettermanufaktur</a>
         <span className="block text-sm text-left text-gray-400">
           Roxana Martins -{" "}
-          <a className="underline" href="https://github.com/xrfg">
-            https://github.com/xrfg
+          <a
+            className="underline"
+            href="https://github.com/xrfg/task_wettermanufaktur"
+          >
+            https://github.com/xrfg/task_wettermanufaktur
           </a>
         </span>
       </header>
       {!token ? (
         <button
-          className="bg-blue-500 hover:bg-blue-600 duration-150 ease-in-out rounded-lg px-2 py-1 shadow-sm text-white"
+          className="self-start bg-blue-500 hover:bg-blue-600 duration-150 ease-in-out rounded-lg px-4 py-2 shadow-sm text-white"
           onClick={getToken}
         >
-          Get weather data
+          Get Weather Data
         </button>
       ) : (
         <main className="w-full flex flex-col gap-4 justify-center">
@@ -103,6 +104,7 @@ function App() {
               Select a city
             </label>
             <select
+              autoFocus
               className="block w-full rounded-sm px-2 py-1 text-sm shadow-sm cursor-pointer focus:outline-none bg-blue-50 border"
               onChange={(e) => {
                 const val = stations.find((st) => st.value === e.target.value);
@@ -122,9 +124,7 @@ function App() {
               })}
             </select>
             {error && (
-              <p className="text-sm text-red-500 font-bold text-center">
-                {error}
-              </p>
+              <p className="text-sm text-red-500 text-center">{error}</p>
             )}
           </div>
           {weatherData && (
